@@ -4,3 +4,4 @@ This repository deliver a "Ultima Online" RunUO 1.0 server set of files that all
 
 It is also delivering an AutoIt script that allows to launch a client by getting server IP configuration from Internet and setting up the Windows Registry for a customized client.
 
+Use Windows XP if you really wanna run it, with .Net 1.2 (ouch!)
