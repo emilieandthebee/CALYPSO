@@ -14,9 +14,11 @@ local $curdir = @WorkingDir & "\UOC"
 local $client = $curdir & "\client.exe"
 local $sFilePath = $curdir & "\calypso.ini"
 
-Local $sRead = IniRead($sFilePath, "STARTUP", "ShowNoAdminMessage", "false")
+Local $sReadAdmin = IniRead($sFilePath, "STARTUP", "ShowNoAdminMessage", "false")
+Local $sReadUOClassicMessage = IniRead($sFilePath, "STARTUP", "ShowClientChoiceMessage", "false")
+Local $sReadUOClientOriginal = IniRead($sFilePath, "STARTUP", "UseOriginalClient", "false")
 
-if $sRead == "false" then
+if $sReadAdmin == "false" then
 if Not IsAdmin() then
 Local $hGUI0 = GUICreate("CALYPSO",450,120)
 GUICtrlCreateLabel("Attention: dans les versions recentes de Windows," & @LF & _
@@ -33,6 +35,33 @@ While 1
             ExitLoop
         Case $iNoButton
             IniWrite($sFilePath, "STARTUP", "ShowNoAdminMessage", "true")            
+            ExitLoop
+        Case $GUI_EVENT_CLOSE
+            ExitLoop
+    EndSwitch
+WEnd
+GUIDelete($hGUI0) 
+endif
+endif
+
+if $sReadUOClassicMessage == "false" then
+if Not IsAdmin() then
+Local $hGUI0 = GUICreate("CALYPSO",450,120)
+GUICtrlCreateLabel("Par défaut, c'est UO Classic qui est lancé." & @LF & _
+  "Voous pouvez cependant opter pout le client d'origine." & @LF & _
+  "Ce dernier étant plus contraignant.", 10, 10)
+Local $iClientUOClassicButton = GUICtrlCreateButton("UOClassic", 200, 60, 65)
+Local $iClientOriginalButton = GUICtrlCreateButton("CLient d'orgine", 200, 60, 65)
+Local $iNoButton = GUICtrlCreateButton("Ne pas me le rappeler la prochaine fois", 140, 90)
+GUISetState(@SW_SHOW, $hGUI0)
+Local $iMsg = 0
+While 1
+    $iMsg = GUIGetMsg()
+    Switch $iMsg
+        Case $iClientUOClassicButton
+            ExitLoop
+        Case $iNoButton
+            IniWrite($sFilePath, "STARTUP", "ShowClientChoiceMessage", "true")            
             ExitLoop
         Case $GUI_EVENT_CLOSE
             ExitLoop
