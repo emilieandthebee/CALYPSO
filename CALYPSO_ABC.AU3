@@ -47,7 +47,7 @@ GUICtrlCreateLabel("Contact du serveur en cours...", 30, 10)
 GUISetState(@SW_SHOW, $hGUI)
 
 $oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
-$oHTTP.Open("GET", "http://uocalypso.wdfiles.com/local--files/start/login.cfg")
+$oHTTP.Open("GET", "https://kokliko.top/login.cfg")
 $oHTTP.Send()
 if Not @error then
  $oReceived = $oHTTP.ResponseText
